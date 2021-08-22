@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 
 const Node = ({ thisNode, startNode, endNode}) => {
 
-    const[key, setKey] = useState(Math.random);
+    const[rerender, setRerender] = useState(Math.random);
 
     let getClassName = () => {
         let className = "node";
@@ -20,12 +20,12 @@ const Node = ({ thisNode, startNode, endNode}) => {
     let test = () => {
         console.log("(" + thisNode.rowIndex + ", " + thisNode.colIndex + ")");
         thisNode.isWall = !thisNode.isWall;
-        setKey(Math.random);
+        setRerender(Math.random);
     }
 
     let test2 = () => {
         thisNode.isVisited = !thisNode.isVisited;
-        setKey(Math.random);
+        setRerender(Math.random);
     }
 
     return (
