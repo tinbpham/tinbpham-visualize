@@ -47,6 +47,7 @@ const SearchingAlgorithm = () => {
             // isEnd,
             isWall: false,
             isVisited: false,
+            distance: Infinity,
         }
     }
 
@@ -75,7 +76,7 @@ const SearchingAlgorithm = () => {
     let visualizeAlgorithm = () => {
         let visitedNodesInOrder = algorithmToVisualize(grid, startingNode, endingNode);
         for (let node of visitedNodesInOrder) {
-            console.log(node.rowIndex + ", " + node.colIndex);
+            // console.log(node.rowIndex + ", " + node.colIndex);
             grid[node.rowIndex][node.colIndex].isVisited = true;
             setRerender(Math.random);
         }
