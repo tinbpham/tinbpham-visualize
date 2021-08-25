@@ -5,12 +5,12 @@ import Node from './Node'
 import dijkstraAlgorithm from '../algorithms/Dijkstra'
 import aStarAlgorithm from '../algorithms/Astar'
 
-const GRID_ROW_SIZE = 24;
-const GRID_COL_SIZE = 48;
-const INITIAL_START_NODE_ROW = 12;
-const INITIAL_START_NODE_COL = 16;
-const INITIAL_END_NODE_ROW = 12;
-const INITIAL_END_NODE_COL = 31;
+let GRID_ROW_SIZE = 24;
+let GRID_COL_SIZE = 48;
+let INITIAL_START_NODE_ROW = 12;
+let INITIAL_START_NODE_COL = 16;
+let INITIAL_END_NODE_ROW = 12;
+let INITIAL_END_NODE_COL = 31;
 
 const SearchingAlgorithm = () => {
     
@@ -18,9 +18,18 @@ const SearchingAlgorithm = () => {
     const[startingNode, setStartingNode] = useState();
     const[endingNode, setEndingNode] = useState();
     const[rerender, setRerender] = useState(Math.random);
+    const[windowDimensions, setWindowDimension] = useState(getWindowDimensions);
     let algorithmToVisualize = () => console.log("Please pick an Algorithm");
 
     useEffect (() => {
+        // Responsively set the grid size and start/end node
+        GRID_COL_SIZE = Math.ceil(windowDimensions.width / 39);
+        GRID_ROW_SIZE = Math.floor(windowDimensions.height / 39) - 1; // Making space for header
+        INITIAL_START_NODE_ROW = Math.floor(GRID_ROW_SIZE / 2);
+        INITIAL_END_NODE_ROW = Math.floor(GRID_ROW_SIZE / 2);
+        INITIAL_START_NODE_COL = Math.floor(GRID_COL_SIZE * (1/3) - 1);
+        INITIAL_END_NODE_COL = Math.floor(GRID_COL_SIZE - INITIAL_START_NODE_COL - 2);
+
         // Create a 2d array of nodes with their respective rows and cols
         let finalGridArray = [];
         for (let rowIndex = 0; rowIndex < GRID_ROW_SIZE; rowIndex++) {
@@ -81,6 +90,19 @@ const SearchingAlgorithm = () => {
             setRerender(Math.random);
         }
     }
+    // Taken from Stackoveflow
+    function getWindowDimensions() {
+        const { innerWidth: width, innerHeight: height } = window;
+        return {
+          width,
+          height
+        };
+    }
+
+    let printWindowDimensions = () => {
+        let {width, height} = windowDimensions;
+        console.log(width + "px x " + height + "px")
+    }
 
     // let initalizeGrid = () => {
     //     let finalGridArray = [];
@@ -105,6 +127,7 @@ const SearchingAlgorithm = () => {
             <button type="button" onClick={visualizeAlgorithm}>Visualize</button>
             <button type="button" onClick={() => {algorithmToVisualize = dijkstraAlgorithm}}>Dijkstra</button>
             <button type="button" onClick={() => {algorithmToVisualize = aStarAlgorithm}}>A*</button>
+            <button type="button" onClick={printWindowDimensions}>Dimensions</button>
             {grid.map((row, rowIndex) => {
                 return (
                     <div key={rowIndex} className="grid-row">
