@@ -1,6 +1,6 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 
-const Node = ({ thisNode, startNode, endNode}) => {
+const Node = ({ thisNode, startNode, endNode, handleMouseDown, handleMouseEnter, handleMouseUp}) => {
 
     const[rerender, setRerender] = useState(Math.random);
 
@@ -12,26 +12,21 @@ const Node = ({ thisNode, startNode, endNode}) => {
             className += " ending-node";
         else if (thisNode.isWall === true)
             className += " wall-node"
-        else if (thisNode.isVisited === true)
-            className += " visited-node"
+        // else if (thisNode.isVisited === true)
+        //     className += " visited-node"
         return className;
     }
 
-    let test = () => {
-        console.log("(" + thisNode.rowIndex + ", " + thisNode.colIndex + ")");
-        thisNode.isWall = !thisNode.isWall;
-        setRerender(Math.random);
-    }
-
-    let test2 = () => {
-        thisNode.isVisited = !thisNode.isVisited;
-        setRerender(Math.random);
-    }
+    let getIdName = () => thisNode.rowIndex + " " + thisNode.colIndex;
 
     return (
-        <div className={getClassName()} onClick={test}>
-            
-        </div>
+        <div
+            id={getIdName()} 
+            className={getClassName()} 
+            onMouseDown={() => handleMouseDown(thisNode.rowIndex, thisNode.colIndex, `${thisNode.rowIndex} ${thisNode.colIndex}`)}
+            onMouseEnter={() => handleMouseEnter(thisNode.rowIndex, thisNode.colIndex, `${thisNode.rowIndex} ${thisNode.colIndex}`)}
+            onMouseUp={() => handleMouseUp()}
+        ></div>
     )
 }
 

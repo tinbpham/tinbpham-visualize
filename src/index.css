@@ -20,8 +20,8 @@ code {
 }
 
 .node {
-  width: 39px;
-  height: 39px;
+  width: 30px;
+  height: 30px;
   border: 1px solid #cfcfcf;
   margin-left: -1px;
   margin-bottom: -1px;
@@ -45,5 +45,9 @@ code {
 
 .visited-node {
   background-color: blue;
-  border: 1px solid blue;
+  opacity: 90%;
+}
+
+.path-node {
+  background-color: yellow;
 }
