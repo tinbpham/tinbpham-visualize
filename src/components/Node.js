@@ -17,12 +17,22 @@ const Node = ({ thisNode, startNode, endNode, handleMouseDown, handleMouseEnter,
         return className;
     }
 
+    let debug = () => {
+        console.log("(" + thisNode.rowIndex + ", " + thisNode.colIndex + ")")
+        if (thisNode.prevNode)
+            console.log("Prev: (" + thisNode.prevNode.rowIndex + ", " + thisNode.prevNode.colIndex + ")")
+        else 
+            console.log("Prev: NULL");
+        
+    }
+
     let getIdName = () => thisNode.rowIndex + " " + thisNode.colIndex;
 
     return (
         <div
             id={getIdName()} 
             className={getClassName()} 
+            onClick={debug}
             onMouseDown={() => handleMouseDown(thisNode.rowIndex, thisNode.colIndex, `${thisNode.rowIndex} ${thisNode.colIndex}`)}
             onMouseEnter={() => handleMouseEnter(thisNode.rowIndex, thisNode.colIndex, `${thisNode.rowIndex} ${thisNode.colIndex}`)}
             onMouseUp={() => handleMouseUp()}

@@ -22,7 +22,7 @@ const SearchingAlgorithm = () => {
     const[isMouseDown, setIsMouseDown] = useState(false);
     const[onClickIsWall, setOnClickIsWall] = useState(false);
     // const[rerender, setRerender] = useState(Math.random);
-    let algorithmToVisualize = () => console.log("Please pick an Algorithm");
+    let algorithmToVisualize = (s, w, z) => console.log("Please pick an Algorithm");
 
     useEffect (() => {
         // Responsively set the grid size and start/end node
@@ -88,14 +88,18 @@ const SearchingAlgorithm = () => {
 
     let visualizeAlgorithm = () => {
         let visitedNodesInOrder = algorithmToVisualize(grid, startingNode, endingNode);
-
-        
+        if (!visitedNodesInOrder)
+            console.log("Failrue bro")
+        else
+            console.log("suh")
         for (let index = 0; index < visitedNodesInOrder.length; index++) {
             let idName = visitedNodesInOrder[index].rowIndex + " " + visitedNodesInOrder[index].colIndex;
             setTimeout(() => {
-                if (visitedNodesInOrder[index] !== startingNode && visitedNodesInOrder[index] !== endingNode)
-                    document.getElementById(idName).className += ' visited-node';
+                if (visitedNodesInOrder[index] !== startingNode && visitedNodesInOrder[index] !== endingNode) {
+                    document.getElementById(idName).className += " visited-node";
+                }
             }, animationSpeed * index)
+            
         }
         // If there was a path to ending node, animate it
         if (endingNode.prevNode) {
@@ -137,11 +141,15 @@ const SearchingAlgorithm = () => {
         let clickedNode = grid[row][col];
         clickedNode.isWall = !clickedNode.isWall;
         setOnClickIsWall(grid[row][col].isWall);
-
-        if (onClickIsWall === true)
-            document.getElementById(idName).classList.remove("wall-node");
-        else
-            document.getElementById(idName).className += " wall-node";
+        if (isMouseDown && grid[row][col] !== startingNode && grid[row][col] !== endingNode) {
+            if (onClickIsWall === true)
+                document.getElementById(idName).classList.remove("wall-node");
+            else
+                document.getElementById(idName).className += " wall-node";
+        }
+        else {
+            
+        }
         setIsMouseDown(true);
     }
 
@@ -152,9 +160,14 @@ const SearchingAlgorithm = () => {
     let handleMouseEnter = (row, col, idName) => {
         
         if (isMouseDown && grid[row][col] !== startingNode && grid[row][col] !== endingNode) {
-            console.log("yo3")
-            grid[row][col].isWall = true;
-            document.getElementById(idName).className += " wall-node";
+            if (onClickIsWall === true) {
+                grid[row][col].isWall = true;
+                document.getElementById(idName).className += " wall-node";
+            }
+            else {
+                grid[row][col].isWall = false;
+                document.getElementById(idName).classList.remove("wall-node");
+            }
         }
     }
 

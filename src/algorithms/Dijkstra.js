@@ -37,32 +37,37 @@ let updateDistanceOfUnvisitedNeighbors = (currentNode, grid, minHeap) => {
 let getUnvisitedNeighbors = (currentNode, grid) => {
     let unvisitedNeighbors = [];
     let {rowIndex, colIndex} = currentNode;
+    let hasSouth = (rowIndex < grid.length - 1);
+    let hasWest = (colIndex > 0);
+    let hasNorth = (rowIndex > 0);
+    let hasEast = (colIndex < grid[0].length - 1);
 
     // Unvisited Neightbor below(South) the current node
-    if (rowIndex < grid.length - 1 && !grid[rowIndex + 1][colIndex].isVisited) {
+    if (hasSouth && !grid[rowIndex + 1][colIndex].isVisited) {
         // console.log("(" + (rowIndex+1) + ", " + colIndex + ")");
         grid[rowIndex + 1][colIndex].prevNode = currentNode;
         unvisitedNeighbors.push(grid[rowIndex + 1][colIndex]);
     }
     // Unvisited Neightbor left(West) the current node
-    if (colIndex > 0 && !grid[rowIndex][colIndex - 1].isVisited) {
+    if (hasWest && !grid[rowIndex][colIndex - 1].isVisited) {
         // console.log("(" + rowIndex + ", " + (colIndex-1) + ")");
         grid[rowIndex][colIndex - 1].prevNode = currentNode;
         unvisitedNeighbors.push(grid[rowIndex][colIndex - 1]);
     }
     // Unvisited Neighbor above(North) the current node
-    if (rowIndex > 0 && !grid[rowIndex - 1][colIndex].isVisited) {
+    if (hasNorth && !grid[rowIndex - 1][colIndex].isVisited) {
         // console.log("(" + (rowIndex-1) + ", " + colIndex + ")");
         grid[rowIndex - 1][colIndex].prevNode = currentNode;
         unvisitedNeighbors.push(grid[rowIndex - 1][colIndex]);
     }
     // Unvisited Neightbor right(East) the current node
-    if (colIndex < grid[0].length - 1 && !grid[rowIndex][colIndex + 1].isVisited) {
+    if (hasEast && !grid[rowIndex][colIndex + 1].isVisited) {
         // console.log("(" + rowIndex + ", " + (colIndex+1) + ")");
         grid[rowIndex][colIndex + 1].prevNode = currentNode;
         unvisitedNeighbors.push(grid[rowIndex][colIndex + 1]);
     }
 
+    
     return unvisitedNeighbors;
 }
 
