@@ -89,36 +89,35 @@ const SearchingAlgorithm = () => {
     let visualizeAlgorithm = () => {
         let visitedNodesInOrder = algorithmToVisualize(grid, startingNode, endingNode);
         if (!visitedNodesInOrder)
-            console.log("Failrue bro")
-        else
-            console.log("suh")
-        for (let index = 0; index < visitedNodesInOrder.length; index++) {
-            let idName = visitedNodesInOrder[index].rowIndex + " " + visitedNodesInOrder[index].colIndex;
-            setTimeout(() => {
-                if (visitedNodesInOrder[index] !== startingNode && visitedNodesInOrder[index] !== endingNode) {
-                    document.getElementById(idName).className += " visited-node";
-                }
-            }, animationSpeed * index)
-            
-        }
-        // If there was a path to ending node, animate it
-        if (endingNode.prevNode) {
-            let currentNode = endingNode.prevNode;
-            let pathArray = [];
-            while (currentNode !== startingNode) {
-                pathArray.push(currentNode.rowIndex + " " + currentNode.colIndex);
-                currentNode = currentNode.prevNode;
+            console.log("Failure bro")
+        else {
+            for (let index = 0; index < visitedNodesInOrder.length; index++) {
+                let idName = visitedNodesInOrder[index].rowIndex + " " + visitedNodesInOrder[index].colIndex;
+                setTimeout(() => {
+                    if (visitedNodesInOrder[index] !== startingNode && visitedNodesInOrder[index] !== endingNode) {
+                        document.getElementById(idName).className += " visited-node";
+                    }
+                }, animationSpeed * index)
+                
             }
-            // Wait for animating visited nodes to finish
-            setTimeout(() => {
-                for (let index = pathArray.length - 1; index >= 0; index--) {
-                    let idName = pathArray[index]
-                    setTimeout(() => {
-                        document.getElementById(idName).className += ' path-node';
-                    }, 2 * animationSpeed * (pathArray.length - index))
-                }    
-            }, animationSpeed * visitedNodesInOrder.length)
-            
+            // If there was a path to ending node, animate it
+            if (endingNode.prevNode) {
+                let currentNode = endingNode.prevNode;
+                let pathArray = [];
+                while (currentNode !== startingNode) {
+                    pathArray.push(currentNode.rowIndex + " " + currentNode.colIndex);
+                    currentNode = currentNode.prevNode;
+                }
+                // Wait for animating visited nodes to finish
+                setTimeout(() => {
+                    for (let index = pathArray.length - 1; index >= 0; index--) {
+                        let idName = pathArray[index]
+                        setTimeout(() => {
+                            document.getElementById(idName).className += ' path-node';
+                        }, 2 * animationSpeed * (pathArray.length - index))
+                    }    
+                }, animationSpeed * visitedNodesInOrder.length)
+            }
         }
         
     }
